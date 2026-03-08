@@ -13,6 +13,11 @@
 |
 */
 
-$router->get('/', function () use ($router) {
-    return $router->app->version();
+$router->get('/health', function () {
+    return response()->json(['status' => 'ok']);
+});
+
+$router->group(['prefix' => 'api/v1'], function () use ($router) {
+    $router->post('/transfers', 'TransferController@store');
+    $router->get('/transfers/{id}', 'TransferController@show');
 });
